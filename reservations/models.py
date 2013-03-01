@@ -2,6 +2,14 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+class Business(models.Model):
+    """ Business model --who own the business"""
+    user = models.ForeignKey(User)
+    business_name = models.CharField(null=False, blank=False)
+    openninghour = models.ForeignKey(reservationdays)
+    
+    
+
 class Reservation(models.Model):
     """Reservation model - who made a reservation and when"""
     user = models.ForeignKey(User)
@@ -9,6 +17,8 @@ class Reservation(models.Model):
     # Timestamps
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True, db_index=True)
+    # BusinessOWner
+    business = models.ForeignKey(business)
 
     class Meta:
         abstract = True
@@ -29,6 +39,8 @@ class SimpleReservation(Reservation):
 class ReservationDay(models.Model):
     """Reservation day model represeting single day and free/non-free spots for that day"""
     date = models.DateField(null=False, blank=False)
+    started = models.DateTimeField(null=False, blank=False)
+    ended = models.DateTimeField(null=False, blank=False)
     spots_total = models.IntegerField(null=True, default=32)
     spots_free = models.IntegerField(null=True, default=32)
 
