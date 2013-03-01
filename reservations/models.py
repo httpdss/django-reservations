@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 class Business(models.Model):
     """ Business model --who own the business"""
     user = models.ForeignKey(User)
-    business_name = models.CharField(null=False, blank=False)
     openninghour = models.ForeignKey(reservationdays)
     
     
