@@ -1,5 +1,6 @@
 from django.conf.urls.defaults import *
-from django.views.generic.simple import *
+# from django.views.generic.simple import *
+from django.views.generic import TemplateView
 from views import *
 # Enable admin
 from django.contrib import admin
