@@ -2,10 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class Business(models.Model):
-    """ Business model --who own the business"""
-    user = models.ForeignKey(User)
-    openninghour = models.ForeignKey(reservationdays)
+#class Business(models.Model):
+#    """ Business model --who own the business"""
+#    user = models.ForeignKey(User)
+#    openninghour = models.ForeignKey(reservationdays)
     
     
 
@@ -17,7 +17,7 @@ class Reservation(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True, db_index=True)
     # BusinessOWner
-    business = models.ForeignKey(business)
+    #business = models.ForeignKey(business)
 
     class Meta:
         abstract = True
