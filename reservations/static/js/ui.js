@@ -76,7 +76,7 @@
             _ref = data.holidays;
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
                 elem = _ref[_i];
-                elem.date = new Date(elem.date * 1000);
+                elem.date = new Date(elem.date * 1000+(24*60*60*1000));
                 App.calendar.addHoliday(elem);
             }
             if (App.calendar._holidays.length !== lengthBefore) {
@@ -105,7 +105,7 @@
             var date, elem, _i, _len;
             for (_i = 0, _len = data.length; _i < _len; _i++) {
                 elem = data[_i];
-                date = new Date(elem.fields.date * 1000);
+                date = new Date(elem.fields.date * 1000+(24*60*60*1000));
                 date.setHours(0);
                 App.monthData[date] = elem.fields;
             }
@@ -132,11 +132,15 @@
         Reservation.prototype.successHandler = function (data) {
             var elem, lengthBefore, _i, _len, _ref;
             this.data = data;
+            console.log(data);
             lengthBefore = App.calendar._reservations.length;
             _ref = data.reservations;
+            console.log('--reservations--');
+            console.log(data.reservations);
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
                 elem = _ref[_i];
-                elem.date = new Date(elem.date * 1000);
+                console.log("date: "+elem.date);
+                elem.date = new Date(elem.date * 1000+(24*60*60*1000));
                 App.calendar.addReservation(elem);
             }
             if (App.calendar._reservations.length !== lengthBefore) {
@@ -163,7 +167,7 @@
         }
         Calendar.prototype.updateReservationDay = function (reservationDay) {
             var date;
-            date = new Date(reservationDay.fields.date * 1000);
+            date = new Date(reservationDay.fields.date * 1000+(24*60*60*1000));
             date.setHours(0);
             return App.monthData[date] = reservationDay.fields;
         };
@@ -227,6 +231,7 @@
                 day: dayOfMonth,
                 csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
             };
+            console.log(data);
             return $.ajax({
                 url: 'reservation',
                 type: 'POST',
@@ -308,7 +313,9 @@
                         _html += '<br/><span class="content">' + message + '</span></td>';
                     } else {
                         _html += '<td class="' + divClass.join(" ") + '" id="' + id + '">' + dayOfMonth;
+                        
                         dayReservations = this.getReservations(dayOfMonth, mon.getMonth(), mon.getFullYear());
+                        console.log(dayReservations)
                         if (__indexOf.call(divClass, "future") >= 0 && (!App.defaults.reservations_limit || dayReservations.length < App.defaults.reservations_limit)) {
                             _html += '<br/><ul class="day-actions"><li><button class="btn btn-primary btn-reserve">' + Data.label.reserve + '</button></li></ul>';
                         }
@@ -349,6 +356,7 @@
                     params = {
                         id: $(this).attr("db-id")
                     };
+                    console.log(params);
                     return $.ajax({
                         url: 'reservation?' + $.param(params),
                         type: 'DELETE',
@@ -411,7 +419,7 @@
             } else {
                 this.updateReservationDay(data.reservation_day);
                 reservation = data.reservation;
-                reservation.date = new Date(reservation.date * 1000);
+                reservation.date = new Date(reservation.date * 1000+(24*60*60*1000));
                 this.addReservation(reservation);
                 this.modalDetail.modal('hide');
                 return App.calendar.render();

@@ -116,13 +116,13 @@ class Reservation(JSONResponseMixin, View):
         reservation.date = date
         reservation.save()
 
-        # Send email to user that the reservation has been sucessfully placed
-        send_email(request.user.email, _('New booking | %s' % settings.APP_SHORTNAME), 'email_new.html',
-            {'name': request.user.username,
-             'date': date,
-             'reservation_id': reservation.id,
-             'extra_data': form,
-             'domain': settings.APP_URL})
+        # Send email to user that the reservation has been sucessfully placed ** bypass this for now -- setup email in settings
+        # send_email(request.user.email, _('New booking | %s' % settings.APP_SHORTNAME), 'email_new.html',
+        #     {'name': request.user.username,
+        #      'date': date,
+        #      'reservation_id': reservation.id,
+        #      'extra_data': form,
+        #      'domain': settings.APP_URL})
 
         reservation_dict = model_to_dict(reservation)
         reservation_dict['short_desc'] = reservation.short_desc()

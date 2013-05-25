@@ -1,13 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+import datetime
 
 #class Business(models.Model):
 #    """ Business model --who own the business"""
 #    user = models.ForeignKey(User)
 #    openninghour = models.ForeignKey(reservationdays)
-    
-    
+
 
 class Reservation(models.Model):
     """Reservation model - who made a reservation and when"""
@@ -38,8 +37,8 @@ class SimpleReservation(Reservation):
 class ReservationDay(models.Model):
     """Reservation day model represeting single day and free/non-free spots for that day"""
     date = models.DateField(null=False, blank=False)
-    started = models.DateTimeField(null=False, blank=False)
-    ended = models.DateTimeField(null=False, blank=False)
+    started = models.DateTimeField(null=False, blank=False, auto_now=True)
+    ended = models.DateTimeField(null=False, blank=False, auto_now=True)
     spots_total = models.IntegerField(null=True, default=32)
     spots_free = models.IntegerField(null=True, default=32)
 
